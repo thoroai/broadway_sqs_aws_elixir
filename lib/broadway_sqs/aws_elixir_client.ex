@@ -93,7 +93,7 @@ if Code.ensure_loaded?(AWS) do
       # the specification.
       reason = decoded["message"] || decoded["Message"]
 
-      Logger.error(
+      log_message(
         "Unable to fetch events from AWS queue #{queue_url}. Reason: #{inspect(reason)}"
       )
 
@@ -101,7 +101,7 @@ if Code.ensure_loaded?(AWS) do
     end
 
     defp wrap_received_messages({:error, reason}, %{queue_url: queue_url}) do
-      Logger.error(
+      log_message(
         "Unable to fetch events from AWS queue #{queue_url}. Reason: #{inspect(reason)}"
       )
 
@@ -197,6 +197,12 @@ if Code.ensure_loaded?(AWS) do
           |> Map.put(:session_token, creds[:token])
           |> Map.take(@aws_sqs_client_args)
           |> Enum.into(Keyword.new())
+      end
+    end
+
+    defp log_message(message) do
+      if Application.get_env(:broadway_sqs, :can_log_messages, true) do
+        Logger.error(message)
       end
     end
   end
