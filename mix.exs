@@ -27,7 +27,7 @@ defmodule BroadwaySqs.MixProject do
   defp deps do
     [
       {:broadway, "~> 1.0"},
-      {:aws_credentials, "~> 0.3"},
+      {:aws_credentials, "~> 1.0"},
       {:aws, "~> 1.0"},
       {:nimble_options, "~> 0.3.7 or ~> 0.4 or ~> 1.0"},
       {:telemetry, "~> 0.4.3 or ~> 1.0"},
